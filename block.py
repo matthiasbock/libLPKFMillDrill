@@ -13,17 +13,19 @@ class Block:
     # by parsing from string
     #
     def __init__(self, s):
-        this.binary_source = ""
+        self.binary_source = ""
+        if s == None:
+            return
         c = 0
-        while (s[c] != LMD_BLOCK_END) and (c < len(s)):
-            this.binary_source += s[c]
+        while (c < len(s)) and (s[c] != LMD_BLOCK_END):
+            self.binary_source += s[c]
             c += 1
         # include block end character (terminator)
-        this.binary_source += s[c]
+        self.binary_source += s[c]
 
     #
-    # Returns size of this block
+    # Returns size of self block
     # including terminator
     #
     def getSize(self):
-        return len(this.binary_source)
+        return len(self.binary_source)

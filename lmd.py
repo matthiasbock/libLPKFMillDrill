@@ -25,52 +25,56 @@ def read_string(haystack, cursor):
 class LMD:
     def __init__(self, s=None):
         # initialize class attributes
-        this.header = []
-        this.blocks = []
-        this.source = s
+        self.header = []
+        self.blocks = []
+        self.source = s
         if s != None:
-            this.parse()
+            self.parse()
 
     def parse(self, s=None, debug=True):
         # overwrite possible pre-defined source
         if s != None:
-            this.source = s
+            self.source = s
 
         # cancel if no source available
-        if this.source == None:
+        if self.source == None:
             return
 
         # clear class attributes
-        this.header = []
-        this.blocks = []
+        self.header = []
+        self.blocks = []
         cursor = 0
 
         # parse header
         end_of_header = False
         while not end_of_header:
             # puts cursor to first byte behind string end
-            s, cursor = read_string(this.source, cursor)
-            this.header.append(s)
+            s, cursor = read_string(self.source, cursor)
+            self.header.append(s)
 
             # line break expected
-            assert this.source[cursor:cursor+2] == "\x0A\x0D"
+            assert self.source[cursor:cursor+2] == "\x0A\x0D"
             cursor += 2
 
             # end of header marker
-            end_of_header = (this.source[cursor] == '\x1A') and (cursor < len(this.source))
+            end_of_header = (self.source[cursor] == '\x1A') and (cursor < len(self.source))
 
         # skip end of header marker
         cursor += 1
 
         if debug:
-            print "Parsed "+str(len(this.header))+" lines of header"
-            print this.header
+            print "Parsed "+str(len(self.header))+" lines of header"
+            print self.header
 
         # parse blocks
-        while (cursor < len(this.source)):
+        while (cursor < len(self.source)):
             # instantiate a new block by parsing a substring
-            b = Block(this.source[cursor:])
+            b = Block(self.source[cursor:])
 
-            this.blocks.append(b)
+            self.blocks.append(b)
 
             cursor += b.getSize()
+
+        if debug:
+            print "Parsed "+str(len(self.blocks))+" blocks of content"
+            print self.blocks
