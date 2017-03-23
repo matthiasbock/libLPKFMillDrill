@@ -1,0 +1,10 @@
+# documentation
+*.pdf
+
+# input
+*.lmd
+*.LMD
+
+# binary
+*.pyc
+
